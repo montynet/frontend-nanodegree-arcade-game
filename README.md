@@ -1,20 +1,54 @@
 # Classic Arcade Game Clone Project
-
+This game is developed using object-oriented Javascript (ES6) and HTML5 canvas.
+The game is transpiled to ES5 for legacy browser compatibility.
 ## Table of Contents
 
+- [Getting Started](#GettingStarted)
 - [Instructions](#instructions)
 - [Contributing](#contributing)
 
+## Getting Started
+
+The point of the game is to reach the water.
+You must escape from the enemies littering the game board.
+To move your player, use your arrow keys.
+
+
+Ready to play? Navigate to [game website](www.google.com).
+
 ## Instructions
+* Move the player using your up, down, left, right arrow keys.
+* The enemies will attempt to collide with you, at which point the game resets.
+* If you reach the water you win, you have the option to increase difficulty
+(you can do so as many times as you like).
 
-Use this [rubric](https://review.udacity.com/#!/rubrics/15/view) for self-checking your submission.
+### Installing
 
-Make sure the functions you write are **object-oriented** - either class functions (like `Player` and `Enemy`) or class prototype functions such as `Enemy.prototype.checkCollisions`. Also make sure that the keyword `this` is used appropriately within your class and class prototype functions to refer to the object the function is called upon.
+Any browser in a desktop device will be able to
+play and render this game.
 
-Your **README.md** file should be updated with instructions on both how to 1. Run and 2. Play your arcade game.
+Mobile devices are not supported at this time.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Built With
+
+* [Webstorm](https://www.jetbrains.com/webstorm/) - IDE that I like using.
+* [Babel](https://babeljs.io/repl/#?babili=false&evaluate=true&lineWrap=false&presets=es2015) - ES6 to ES5 online transpiler.
+
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+N/A
+
+## License
+
+N/A
+
+## Authors
+
+* **Roberto Monterroza** - *Initial work*
+
+## Acknowledgments
+
+* [kisspng](https://www.kisspng.com/png-deviantart-frogger-artist-frogger-3477282/download-png.html)
+* [Udacity](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001)
+
