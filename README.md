@@ -1,11 +1,6 @@
 # Classic Arcade Game Clone Project
 This game is developed using object-oriented Javascript (ES6) and HTML5 canvas.
 The game is transpiled to ES5 for legacy browser compatibility.
-## Table of Contents
-
-- [Getting Started](#GettingStarted)
-- [Instructions](#instructions)
-- [Contributing](#contributing)
 
 ## Getting Started
 
@@ -14,7 +9,7 @@ You must escape from the enemies littering the game board.
 To move your player, use your arrow keys.
 
 
-Ready to play? Navigate to [game website](www.google.com).
+Ready to play? Navigate to [game website](https://montynet.github.io/frontend-nanodegree-arcade-game/).
 
 ## Instructions
 * Move the player using your up, down, left, right arrow keys.
