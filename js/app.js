@@ -1,20 +1,26 @@
 let FROGGER = function () {
 
   /**
-   * Global scope functions.
-   * Scope is the FROGGER object.
+   * Class to help build the game.
+   * This was added after Udacity reviewer stated
+   * not to use declared functions.
    */
-  function randomEnemyPosition() {
-    let position = {};
-    let enemyRow = Math.floor(Math.random() * 3);
-    position.x = -80;
-    position.y = 65 + 83 * enemyRow;
-    return position;
-  }
+  class Util {
+    constructor(){
+    }
 
-  function randomSpeed({baseSpeed = 250,
-                       rangeSpeed= 300} = {}) {
-    return baseSpeed + Math.floor(Math.random() * rangeSpeed);
+    static randomEnemyPosition(){
+      let position = {};
+      let enemyRow = Math.floor(Math.random() * 3);
+      position.x = -80;
+      position.y = 65 + 83 * enemyRow;
+      return position;
+    }
+
+    static randomSpeed({baseSpeed = 250,
+                  rangeSpeed= 300} = {}) {
+      return baseSpeed + Math.floor(Math.random() * rangeSpeed);
+    }
   }
 
 
@@ -38,7 +44,7 @@ let FROGGER = function () {
    */
   class Enemy extends GameObject {
 
-    constructor(sprite = 'images/enemy-bug.png', position = randomEnemyPosition(), speed = randomSpeed()) {
+    constructor(sprite = 'images/enemy-bug.png', position = Util.randomEnemyPosition(), speed = Util.randomSpeed()) {
       super(sprite, position.x, position.y);
       this.speed = speed;
     }
@@ -51,8 +57,8 @@ let FROGGER = function () {
     }
 
     reset() {
-      let position = randomEnemyPosition();
-      this.speed = randomSpeed();
+      let position = Util.randomEnemyPosition();
+      this.speed = Util.randomSpeed();
       this.x = position.x;
       this.y = position.y;
     }
@@ -66,30 +72,15 @@ let FROGGER = function () {
     }
 
     update(dt) {
-      function isPlayerOnWater() {
-        return ( this.y === this.playerstarty - 83 * 5 );
-      }
-
-      function haveCollisionsOccurred() {
-        let collided = false;
-        for (let i = 0; i < allEnemies.length; i++) {
-          if (Math.abs(allEnemies[i].x - this.x) <= 60 &&
-            Math.abs(allEnemies[i].y - this.y) <= 20) {
-            collided = true;
-          }
-        }
-        return collided;
-      }
-
-      if (haveCollisionsOccurred.call(this)) {
+      if (this.haveCollisionsOccurred.call(this)) {
         this.reset();
-      } else if (isPlayerOnWater.call(this)) {
+      } else if (this.isPlayerOnWater.call(this)) {
         this.reset();
         let isCocky = confirm("You won! Increase difficulty? ");
 
         //Add an enemy to the game if the player has chosen to do. Increase the speed, override baseSpeed default.
         if(isCocky){
-          allEnemies.push(new Enemy('images/monster-small.png', undefined, randomSpeed({baseSpeed: 500})))
+          allEnemies.push(new Enemy('images/monster-small.png', undefined, Util.randomSpeed({baseSpeed: 500})))
         }
       }
     }
@@ -134,6 +125,21 @@ let FROGGER = function () {
       }
 
       handleChange.call(this, changeX, changeY);
+    }
+
+    isPlayerOnWater(){
+      return ( this.y === this.playerstarty - 83 * 5 );
+    }
+
+    haveCollisionsOccurred(){
+      let collided = false;
+      for (let i = 0; i < allEnemies.length; i++) {
+        if (Math.abs(allEnemies[i].x - this.x) <= 70 &&
+          Math.abs(allEnemies[i].y - this.y) <= 25) {
+          collided = true;
+        }
+      }
+      return collided;
     }
   }
 

@@ -11,30 +11,44 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var FROGGER = function () {
 
   /**
-   * Global scope functions.
-   * Scope is the FROGGER object.
+   * Class to help build the game.
+   * This was added after Udacity reviewer stated
+   * not to use declared functions.
    */
-  function randomEnemyPosition() {
-    var position = {};
-    var enemyRow = Math.floor(Math.random() * 3);
-    position.x = -80;
-    position.y = 65 + 83 * enemyRow;
-    return position;
-  }
+  var Util = function () {
+    function Util() {
+      _classCallCheck(this, Util);
+    }
 
-  function randomSpeed() {
-    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref$baseSpeed = _ref.baseSpeed,
-      baseSpeed = _ref$baseSpeed === undefined ? 250 : _ref$baseSpeed,
-      _ref$rangeSpeed = _ref.rangeSpeed,
-      rangeSpeed = _ref$rangeSpeed === undefined ? 300 : _ref$rangeSpeed;
+    _createClass(Util, null, [{
+      key: 'randomEnemyPosition',
+      value: function randomEnemyPosition() {
+        var position = {};
+        var enemyRow = Math.floor(Math.random() * 3);
+        position.x = -80;
+        position.y = 65 + 83 * enemyRow;
+        return position;
+      }
+    }, {
+      key: 'randomSpeed',
+      value: function randomSpeed() {
+        var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref$baseSpeed = _ref.baseSpeed,
+          baseSpeed = _ref$baseSpeed === undefined ? 250 : _ref$baseSpeed,
+          _ref$rangeSpeed = _ref.rangeSpeed,
+          rangeSpeed = _ref$rangeSpeed === undefined ? 300 : _ref$rangeSpeed;
 
-    return baseSpeed + Math.floor(Math.random() * rangeSpeed);
-  }
+        return baseSpeed + Math.floor(Math.random() * rangeSpeed);
+      }
+    }]);
+
+    return Util;
+  }();
 
   /**
    * Base class for the game objects.
    */
+
 
   var GameObject = function () {
     function GameObject(sprite, x, y) {
@@ -65,8 +79,8 @@ var FROGGER = function () {
 
     function Enemy() {
       var sprite = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'images/enemy-bug.png';
-      var position = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : randomEnemyPosition();
-      var speed = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : randomSpeed();
+      var position = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Util.randomEnemyPosition();
+      var speed = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Util.randomSpeed();
 
       _classCallCheck(this, Enemy);
 
@@ -87,8 +101,8 @@ var FROGGER = function () {
     }, {
       key: 'reset',
       value: function reset() {
-        var position = randomEnemyPosition();
-        this.speed = randomSpeed();
+        var position = Util.randomEnemyPosition();
+        this.speed = Util.randomSpeed();
         this.x = position.x;
         this.y = position.y;
       }
@@ -117,29 +131,15 @@ var FROGGER = function () {
     _createClass(Player, [{
       key: 'update',
       value: function update(dt) {
-        function isPlayerOnWater() {
-          return this.y === this.playerstarty - 83 * 5;
-        }
-
-        function haveCollisionsOccurred() {
-          var collided = false;
-          for (var i = 0; i < allEnemies.length; i++) {
-            if (Math.abs(allEnemies[i].x - this.x) <= 60 && Math.abs(allEnemies[i].y - this.y) <= 20) {
-              collided = true;
-            }
-          }
-          return collided;
-        }
-
-        if (haveCollisionsOccurred.call(this)) {
+        if (this.haveCollisionsOccurred.call(this)) {
           this.reset();
-        } else if (isPlayerOnWater.call(this)) {
+        } else if (this.isPlayerOnWater.call(this)) {
           this.reset();
           var isCocky = confirm("You won! Increase difficulty? ");
 
           //Add an enemy to the game if the player has chosen to do. Increase the speed, override baseSpeed default.
           if (isCocky) {
-            allEnemies.push(new Enemy('images/monster-small.png', undefined, randomSpeed({ baseSpeed: 500 })));
+            allEnemies.push(new Enemy('images/monster-small.png', undefined, Util.randomSpeed({ baseSpeed: 500 })));
           }
         }
       }
@@ -186,6 +186,22 @@ var FROGGER = function () {
         }
 
         handleChange.call(this, changeX, changeY);
+      }
+    }, {
+      key: 'isPlayerOnWater',
+      value: function isPlayerOnWater() {
+        return this.y === this.playerstarty - 83 * 5;
+      }
+    }, {
+      key: 'haveCollisionsOccurred',
+      value: function haveCollisionsOccurred() {
+        var collided = false;
+        for (var i = 0; i < allEnemies.length; i++) {
+          if (Math.abs(allEnemies[i].x - this.x) <= 70 && Math.abs(allEnemies[i].y - this.y) <= 25) {
+            collided = true;
+          }
+        }
+        return collided;
       }
     }]);
 
